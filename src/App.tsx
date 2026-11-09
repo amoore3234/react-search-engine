@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { DebounceSearchEngine } from './component/DebounceSearchEngine'
 import { SearchEngine } from './component/SearchEngine'
 
 export type Food = {
@@ -25,7 +27,18 @@ export default function App() {
     type: 'Dairy'
   }
   const foods: Food[] = [foodOne, foodTwo, foodThree]
+  const [searchQuery, setSearchQuery] = useState('');
+
+  function handleSearchExecution(query: string) {
+    console.log("Debounced search fired with:", query);
+    setSearchQuery(query);
+  }
   return (
-    <SearchEngine foods={foods} />
+    <div>
+      <SearchEngine foods={foods} />
+      <DebounceSearchEngine onSearch={handleSearchExecution} />
+
+      <p>Current search value: {searchQuery}</p>
+    </div>
   )
 }
